@@ -20,7 +20,7 @@ function findPlayerLocation (){
         console.log("User's co-ordinates is off by " + playerCoordinates.accuracy + " metres.");
 
         // renderMap(playerCoordinates.latitude, playerCoordinates.longitude)
-        renderMap(51.52, -0.08)
+        renderMap(51.520356, -0.087527)
 
     })   
 }
@@ -29,12 +29,51 @@ function renderMap (latitude, longitude){
 
     mapboxgl.accessToken = 'pk.eyJ1IjoibG9wZWFyaXlvIiwiYSI6ImNrNWpkamFrcTAyM2IzZXBja3dncmtld3AifQ.-T1q9Tw23a3tqqJ9CYFllg';
     
-    var map = new mapboxgl.Map({
+    let map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'mapbox://styles/lopeariyo/ck5jfumur1xbt1imwh82f1ugp', //hosted style id
         center: [longitude, latitude], // starting position [longitude, latitude], needs to be generated and shown on map 
         zoom: 15 // starting zoom
     });
+
+    map.on('load', () => {
+
+        map.addSource('pointsSource', {
+            'type': 'geojson', 
+            data: {
+                'type': 'FeatureCollection', 
+                'features': [
+                {
+                    'type': 'Feature', 
+                    'properties': {},
+                    'geometry': {
+                        'type': 'Point',
+                        'coordinates': [
+                            longitude,
+                            latitude
+                        ]
+                    }
+                }
+                ]
+            }
+        })
+    
+        map.addLayer({
+            id: 'points',
+            source: 'pointsSource',
+            type: 'circle'
+            // paint: {
+            // //   'circle-radius': 10,
+            // //   'circle-color': 'skyblue'
+            // }
+        });
+
+
+
+
+    });
+    
+    
     
 }
 
