@@ -1,46 +1,45 @@
-function findPlayerLocation (){
+
+function displayCurrentPosition(){
 
     if (!navigator.geolocation) {
-        console.log("Geolocation is not supported by your browser");
-        return;
+        alert("Geolocation is not supported by your browser");
+    }else{
+       findPlayerLocation();
     }
+}
 
     // console.log("Locating..."); if we have time we will change this to a loading screen
 
-    navigator.geolocation.getCurrentPosition((position) => {
+function findPlayerLocation(){
+    navigator.geolocation.watchPosition(renderMap)
+    // navigator.geolocation.getCurrentPosition(renderMap)
 
-        let playerCoordinates = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-        };
-
-        // console.log("User's current latitude is " + playerCoordinates.latitude + ".");
-        // console.log("User's current longitude is " + playerCoordinates.longitude + ".");
-
-        // renderMap(playerCoordinates.latitude, playerCoordinates.longitude)
-        // return playerCoordinates
-        renderMap(playerCoordinates.latitude, playerCoordinates.longitude)
-
-    })   
-    
 }
 
-function renderMap (latitude, longitude){
-
-    mapboxgl.accessToken = 'pk.eyJ1IjoibG9wZWFyaXlvIiwiYSI6ImNrNWpkamFrcTAyM2IzZXBja3dncmtld3AifQ.-T1q9Tw23a3tqqJ9CYFllg';
     
+function renderMap(position){
+    debugger
+    mapboxgl.accessToken = 'pk.eyJ1IjoibG9wZWFyaXlvIiwiYSI6ImNrNWpkamFrcTAyM2IzZXBja3dncmtld3AifQ.-T1q9Tw23a3tqqJ9CYFllg';
+
     let map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'mapbox://styles/lopeariyo/ck5jfumur1xbt1imwh82f1ugp', //hosted style id
-        center: [longitude, latitude], // starting position [longitude, latitude], needs to be generated and shown on map 
+        center: [position.coords.longitude, position.coords.latitude], // starting position [longitude, latitude], needs to be generated and shown on map 
         zoom: 15 // starting zoom
     });
 
     map.on('load', () => {
 
-        window.setInterval( function (){
-            console.log("Here's something interesting")
-        }, 2000)
+        setInterval(
+            ()=>map.getSource('playerLocation').setData(
+                {
+                    "geometry":{
+                        "type": "Point",
+                        "coordinates":[position.coords.longitude,position.coords.latitude]}, 
+                        "type": "Feature", 
+                        "properties":{}
+            }), 
+            2000);
 
         map.addSource('playerLocation', {
             'type': 'geojson', 
@@ -53,8 +52,8 @@ function renderMap (latitude, longitude){
                     'geometry': {
                         'type': 'Point',
                         'coordinates': [
-                            longitude,
-                            latitude
+                            position.coords.longitude,
+                            position.coords.latitude
                         ]
                     }
                 }
@@ -81,13 +80,10 @@ function renderMap (latitude, longitude){
     startButton.addEventListener("touchstart", startGame) 
     startButton.innerText = "Start Game"
     startButtonContainer.append(startButton)
-
-    
 }
 
-function startGame(){
-    
-    alert("This game has started")
+function startGame(){ 
+    alert("This game has started");
 }
 
 
@@ -107,7 +103,6 @@ function startGame(){
 // myFunction(x) // Call listener function at run time
 // x.addListener(myFunction) // Attach listener function on state changes
 
+displayCurrentPosition();
 
-
-findPlayerLocation() 
-// renderMap(playerCoordinates.latitude, playerCoordinates.longitude)
+ 
