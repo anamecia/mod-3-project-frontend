@@ -11,8 +11,8 @@ function displayCurrentPosition(){
     // console.log("Locating..."); if we have time we will change this to a loading screen
 
 function findPlayerLocation(){
-    //navigator.geolocation.watchPosition(renderMap)
-    navigator.geolocation.getCurrentPosition(renderMap)
+    navigator.geolocation.watchPosition(renderMap)
+    // navigator.geolocation.getCurrentPosition(renderMap)
 
 }
 
@@ -30,7 +30,7 @@ function renderMap(position){
 
     map.on('load', () => {
 
-        // setInterval(()=>map.getSource('playerLocation').setData(/Users/flatironschool/Development/code/module-3/project/mod-3-project-frontend/index.html), 2000);
+        setInterval(()=>map.getSource('playerLocation').setData({"geometry":{"type": "Point","coordinates":[position.coords.longitude,position.coords.latitude]}, "type": "Feature", "properties": {}h}), 2000);
 
         map.addSource('playerLocation', {
             'type': 'geojson', 
