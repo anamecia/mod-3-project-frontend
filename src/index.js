@@ -30,7 +30,16 @@ function renderMap(position){
 
     map.on('load', () => {
 
-        setInterval(()=>map.getSource('playerLocation').setData({"geometry":{"type": "Point","coordinates":[position.coords.longitude,position.coords.latitude]}, "type": "Feature", "properties": {}h}), 2000);
+        setInterval(
+            ()=>map.getSource('playerLocation').setData(
+                {
+                    "geometry":{
+                        "type": "Point",
+                        "coordinates":[position.coords.longitude,position.coords.latitude]}, 
+                        "type": "Feature", 
+                        "properties":{}
+            }), 
+            2000);
 
         map.addSource('playerLocation', {
             'type': 'geojson', 
