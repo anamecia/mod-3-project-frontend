@@ -11,13 +11,16 @@ function findPlayerLocation (){
 
         let playerCoordinates = {
             latitude: position.coords.latitude,
-            longitude: position.coords.longitude
+            longitude: position.coords.longitude, 
+            accuracy: position.coords.accuracy
         };
 
         console.log("User's current latitude is " + playerCoordinates.latitude + ".");
         console.log("User's current longitude is " + playerCoordinates.longitude + ".");
+        console.log("User's co-ordinates is off by " + playerCoordinates.accuracy + " metres.");
 
-        renderMap(playerCoordinates.latitude, playerCoordinates.longitude)
+        // renderMap(playerCoordinates.latitude, playerCoordinates.longitude)
+        renderMap(51.52, -0.08)
 
     })   
 }
@@ -28,11 +31,11 @@ function renderMap (latitude, longitude){
     
     var map = new mapboxgl.Map({
         container: 'map', // container id
-        style: 'mapbox://styles/mapbox/dark-v10', //hosted style id
+        style: 'mapbox://styles/lopeariyo/ck5jfumur1xbt1imwh82f1ugp', //hosted style id
         center: [longitude, latitude], // starting position [longitude, latitude], needs to be generated and shown on map 
         zoom: 15 // starting zoom
     });
-    console.log(document.querySelector("#map"))
+    
 }
 
 findPlayerLocation() 
