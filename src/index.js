@@ -20,7 +20,7 @@ function findPlayerLocation (){
         console.log("User's co-ordinates is off by " + playerCoordinates.accuracy + " metres.");
 
         // renderMap(playerCoordinates.latitude, playerCoordinates.longitude)
-        renderMap(51.520356, -0.087527)
+        renderMap(playerCoordinates.latitude, playerCoordinates.longitude)
 
     })   
 }
@@ -38,7 +38,7 @@ function renderMap (latitude, longitude){
 
     map.on('load', () => {
 
-        map.addSource('pointsSource', {
+        map.addSource('playerLocation', {
             'type': 'geojson', 
             data: {
                 'type': 'FeatureCollection', 
@@ -60,12 +60,12 @@ function renderMap (latitude, longitude){
     
         map.addLayer({
             id: 'points',
-            source: 'pointsSource',
-            type: 'circle'
-            // paint: {
-            // //   'circle-radius': 10,
-            // //   'circle-color': 'skyblue'
-            // }
+            source: 'playerLocation',
+            type: 'circle',
+            paint: {
+                'circle-radius': 10,
+                'circle-color': 'skyblue'
+            }
         });
 
 
