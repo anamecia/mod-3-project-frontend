@@ -39,7 +39,7 @@ button {
     /* justify-self: center; */
 }
 
-button:hover {
+button:click {
         background-color: whitesmoke;
         border: #ffa500 solid 1px;
         color: #ffa500;

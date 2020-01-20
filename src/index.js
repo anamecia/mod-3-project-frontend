@@ -87,7 +87,7 @@ function renderMap (latitude, longitude){
 
 function startGame(){
     
-    alert("This game has started")
+    alert("The hunt has begun")
 }
 
 
