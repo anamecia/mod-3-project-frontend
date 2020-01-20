@@ -9,9 +9,14 @@
 // show start button at the bottom of the map
 
 
-function renderMap(){
-    // get(imageURL)
-    //   .then(result => showMap(result))
+function renderMap (){
+    mapboxgl.accessToken = 'pk.eyJ1IjoibG9wZWFyaXlvIiwiYSI6ImNrNWpkamFrcTAyM2IzZXBja3dncmtld3AifQ.-T1q9Tw23a3tqqJ9CYFllg';
+    var map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'mapbox://styles/mapbox/dark-v10', //hosted style id
+        center: [-0.107639, 51.391750], // starting position [longitude, latitude], needs to be generated and shown on map 
+        zoom: 15 // starting zoom
+    });
 }
 
 renderMap()

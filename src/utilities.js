@@ -1,4 +1,4 @@
-let playerCoordinates = null;
+let playerCoordinates = null;        
 
 function findPlayerLocation() {
 
@@ -7,33 +7,28 @@ function findPlayerLocation() {
         return;
     }
 
-    let options = {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0
-    };
+    // let options = {
+    //     enableHighAccuracy: true,
+    //     timeout: 5000,
+    //     maximumAge: 0
+    // };
     console.log("Locating...");
 
     function success(position) {
 
-        var playerLatitude = position.coords.latitude;
-        var playerLongitude = position.coords.longitude;
         playerCoordinates = {
-            latitude: playerLatitude,
-            longitude: playerLongitude
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
         };
 
-        console.log("User's current latitude is " + playerLatitude + ".");
-        console.log("User's current longitude is " + playerLongitude + ".");
+        console.log("User's current latitude is " + playerCoordinates.latitude + ".");
+        console.log("User's current longitude is " + playerLongitude.longitude + ".");
         console.log(`Off by ${position.coords.accuracy} meters.`);
-        
+        return playerCoordinates   
     }
 
     function error() {
         console.warn("Unable to retrieve your location");
     }
-
-    navigator.geolocation.getCurrentPosition(success, error, options);
+    navigator.geolocation.getCurrentPosition(success, error);
 }
-
-findPlayerLocation();

@@ -4,24 +4,18 @@
     <meta charset="utf-8" />
     <title>Treasure Hunt App</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-    <script src="https://api.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.js"></script>
     <script src="src/utilities.js"type="text/javascript"  charset="utf-8"></script>
     <script src="src/api.js" type="text/javascript" ></script>
     <script src="src/elements.js" type="text/javascript" ></script>
     <script src="src/index.js" type="text/javascript" defer ></script>
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.js"></script>
+
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.css" rel="stylesheet" />
+    
     <link href="index.css" rel="stylesheet" />
 </head>
 <body>
     <div id="map"></div>
-<script defer>
-	mapboxgl.accessToken = 'pk.eyJ1IjoibG9wZWFyaXlvIiwiYSI6ImNrNWpkamFrcTAyM2IzZXBja3dncmtld3AifQ.-T1q9Tw23a3tqqJ9CYFllg';
-    var map = new mapboxgl.Map({
-        container: 'map', // container id
-        style: 'mapbox://styles/mapbox/dark-v10', //hosted style id
-        center: [-0.107639, 51.391750], // starting position [longitude, latitude], needs to be generated and shown on map 
-        zoom: 15 // starting zoom
-    });
-</script>
 </body>
 </html>
