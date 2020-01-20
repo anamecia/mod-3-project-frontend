@@ -11,18 +11,18 @@ function findPlayerLocation (){
 
         let playerCoordinates = {
             latitude: position.coords.latitude,
-            longitude: position.coords.longitude, 
-            accuracy: position.coords.accuracy
+            longitude: position.coords.longitude
         };
 
-        console.log("User's current latitude is " + playerCoordinates.latitude + ".");
-        console.log("User's current longitude is " + playerCoordinates.longitude + ".");
-        console.log("User's co-ordinates is off by " + playerCoordinates.accuracy + " metres.");
+        // console.log("User's current latitude is " + playerCoordinates.latitude + ".");
+        // console.log("User's current longitude is " + playerCoordinates.longitude + ".");
 
         // renderMap(playerCoordinates.latitude, playerCoordinates.longitude)
+        // return playerCoordinates
         renderMap(playerCoordinates.latitude, playerCoordinates.longitude)
 
     })   
+    
 }
 
 function renderMap (latitude, longitude){
@@ -37,6 +37,10 @@ function renderMap (latitude, longitude){
     });
 
     map.on('load', () => {
+
+        window.setInterval( function (){
+            console.log("Here's something interesting")
+        }, 2000)
 
         map.addSource('playerLocation', {
             'type': 'geojson', 
@@ -106,3 +110,4 @@ function startGame(){
 
 
 findPlayerLocation() 
+// renderMap(playerCoordinates.latitude, playerCoordinates.longitude)
