@@ -68,13 +68,41 @@ function renderMap (latitude, longitude){
             }
         });
 
-
-
-
     });
-    
-    
+     //touch events - touchstart, touchend, touchmove, touchcancel
+
+    let startButtonContainer = document.querySelector('.map-overlay');
+    let startButton = document.createElement('button');
+
+    startButton.addEventListener("touchstart", startGame) 
+    startButton.innerText = "Start Game"
+    startButtonContainer.append(startButton)
+
     
 }
+
+function startGame(){
+    
+    alert("This game has started")
+}
+
+
+
+// function myFunction(x) {
+//     if (x.matches) { // If media query matches
+
+
+//     } else {
+//         alert("You need to be using a phone for this application to work")
+//         document.body.style.backgroundColor = "red";
+//     }
+// }
+
+// var x = window.matchMedia("(max-width: 700px)")
+
+// myFunction(x) // Call listener function at run time
+// x.addListener(myFunction) // Attach listener function on state changes
+
+
 
 findPlayerLocation() 
