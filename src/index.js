@@ -1,4 +1,9 @@
 
+//global variables 
+const startButtonContainer = document.querySelector('.map-overlay');
+
+
+//main function
 function displayCurrentPosition(){
 
     if (!navigator.geolocation) {
@@ -8,38 +13,38 @@ function displayCurrentPosition(){
     }
 }
 
-    // console.log("Locating..."); if we have time we will change this to a loading screen
 
 function findPlayerLocation(){
     navigator.geolocation.watchPosition(renderMap)
     // navigator.geolocation.getCurrentPosition(renderMap)
-
 }
 
-    
+
 function renderMap(position){
-    debugger
+    startButtonContainer.innerText="";
     mapboxgl.accessToken = 'pk.eyJ1IjoibG9wZWFyaXlvIiwiYSI6ImNrNWpkamFrcTAyM2IzZXBja3dncmtld3AifQ.-T1q9Tw23a3tqqJ9CYFllg';
 
     let map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'mapbox://styles/lopeariyo/ck5jfumur1xbt1imwh82f1ugp', //hosted style id
         center: [position.coords.longitude, position.coords.latitude], // starting position [longitude, latitude], needs to be generated and shown on map 
-        zoom: 15 // starting zoom
+        zoom: 20 // starting zoom
     });
 
-    map.on('load', () => {
+    renderStartButton();
 
+    map.on('load', () => { 
+        
         setInterval(
-            ()=>map.getSource('playerLocation').setData(
+            ()=> map.getSource('playerLocation').setData(
                 {
-                    "geometry":{
-                        "type": "Point",
-                        "coordinates":[position.coords.longitude,position.coords.latitude]}, 
-                        "type": "Feature", 
-                        "properties":{}
-            }), 
-            2000);
+                "geometry":{
+                    "type": "Point",
+                    "coordinates":[position.coords.longitude,position.coords.latitude]}, 
+                    "type": "Feature", 
+                    "properties":{}
+                }), 2000);
+              
 
         map.addSource('playerLocation', {
             'type': 'geojson', 
@@ -70,16 +75,15 @@ function renderMap(position){
                 'circle-color': 'skyblue'
             }
         });
-
     });
-     //touch events - touchstart, touchend, touchmove, touchcancel
+}
 
-    let startButtonContainer = document.querySelector('.map-overlay');
-    let startButton = document.createElement('button');
+function renderStartButton(){
+    const startButton = document.createElement('button');
 
-    startButton.addEventListener("touchstart", startGame) 
-    startButton.innerText = "Start Game"
-    startButtonContainer.append(startButton)
+    startButton.addEventListener("touchstart", startGame) ;
+    startButton.innerText = "Start Game";
+    startButtonContainer.append(startButton);
 }
 
 function startGame(){ 
@@ -87,6 +91,10 @@ function startGame(){
 }
 
 
+displayCurrentPosition();
+
+
+// console.log("Locating..."); if we have time we will change this to a loading screen
 
 // function myFunction(x) {
 //     if (x.matches) { // If media query matches
@@ -103,6 +111,5 @@ function startGame(){
 // myFunction(x) // Call listener function at run time
 // x.addListener(myFunction) // Attach listener function on state changes
 
-displayCurrentPosition();
 
  
