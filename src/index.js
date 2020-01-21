@@ -1,40 +1,36 @@
-function findPlayerLocation (){
+
+//global variables 
+const startButtonContainer = document.querySelector('.map-overlay');
+
+
+//main function
+function displayCurrentPosition(){
 
     if (!navigator.geolocation) {
-        console.log("Geolocation is not supported by your browser");
-        return;
+        alert("Geolocation is not supported by your browser");
+    }else{
+       findPlayerLocation();
     }
-
-    // console.log("Locating..."); if we have time we will change this to a loading screen
-
-    navigator.geolocation.getCurrentPosition((position) => {
-
-        let playerCoordinates = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-        };
-
-        // console.log("User's current latitude is " + playerCoordinates.latitude + ".");
-        // console.log("User's current longitude is " + playerCoordinates.longitude + ".");
-
-        // renderMap(playerCoordinates.latitude, playerCoordinates.longitude)
-        // return playerCoordinates
-        renderMap(playerCoordinates.latitude, playerCoordinates.longitude)
-
-    })   
-    
 }
 
-function renderMap (latitude, longitude){
 
+function findPlayerLocation(){
+    navigator.geolocation.watchPosition(renderMap)
+    // navigator.geolocation.getCurrentPosition(renderMap)
+}
+
+
+function renderMap(position){
+    startButtonContainer.innerText="";
     mapboxgl.accessToken = 'pk.eyJ1IjoibG9wZWFyaXlvIiwiYSI6ImNrNWpkamFrcTAyM2IzZXBja3dncmtld3AifQ.-T1q9Tw23a3tqqJ9CYFllg';
-    
+
     let map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'mapbox://styles/lopeariyo/ck5jfumur1xbt1imwh82f1ugp', //hosted style id
-        center: [longitude, latitude], // starting position [longitude, latitude], needs to be generated and shown on map 
-        zoom: 15 // starting zoom
+        center: [position.coords.longitude, position.coords.latitude], // starting position [longitude, latitude], needs to be generated and shown on map 
+        zoom: 20 // starting zoom
     });
+
 
     var size = 200;
 
@@ -89,9 +85,21 @@ function renderMap (latitude, longitude){
     }
     };
 
-    map.on('load', () => {
+    renderStartButton();
 
-        map.addImage("pulsing-dot", pulsingDot, { pixelRatio: 2 });
+    map.on('load', () => { 
+      
+       map.addImage("pulsing-dot", pulsingDot, { pixelRatio: 2 });
+        
+        setInterval(
+            ()=> map.getSource('playerLocation').setData(
+                {
+                "geometry":{
+                    "type": "Point",
+                    "coordinates":[position.coords.longitude,position.coords.latitude]}, 
+                    "type": "Feature", 
+                    "properties":{}
+                }), 2000);
 
         map.addSource('playerLocation', {
             'type': 'geojson', 
@@ -102,7 +110,10 @@ function renderMap (latitude, longitude){
                     'type': 'Feature', 
                     'geometry': {
                         'type': 'Point',
-                        'coordinates': [longitude, latitude]
+                        'coordinates': [
+                            position.coords.longitude,
+                            position.coords.latitude
+                        ]
                     }
                 }
                 ]
@@ -117,26 +128,29 @@ function renderMap (latitude, longitude){
                 'icon-image': "pulsing-dot"
             }
         });
-
     });
-     //touch events - touchstart, touchend, touchmove, touchcancel
+}
 
-    let startButtonContainer = document.querySelector('.map-overlay');
-    let startButton = document.createElement('button');
 
-    startButton.addEventListener("touchend", startGame) 
-    startButton.innerText = "Start Game"
-    startButtonContainer.append(startButton)
 
-    
+function renderStartButton(){
+    const startButton = document.createElement('button');
+
+    startButton.addEventListener("touchstart", startGame) ;
+    startButton.innerText = "Start Game";
+    startButtonContainer.append(startButton);
 }
 
 function startGame(){
     
-    alert("The hunt has begun")
+    alert("The hunt has begun");
 }
 
 
+displayCurrentPosition();
+
+
+// console.log("Locating..."); if we have time we will change this to a loading screen
 
 // function myFunction(x) {
 //     if (x.matches) { // If media query matches
@@ -154,6 +168,4 @@ function startGame(){
 // x.addListener(myFunction) // Attach listener function on state changes
 
 
-
-findPlayerLocation() 
-// renderMap(playerCoordinates.latitude, playerCoordinates.longitude)
+ 
