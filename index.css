@@ -25,6 +25,11 @@ body {
     padding: 10px;
     }
 
+#timer{
+    font-size: 100px;
+    color: #ffa500;
+}
+
 button {
     /* left: 37%; */
     /* margin-top:320%; */
