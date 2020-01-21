@@ -12,6 +12,10 @@ const wasabi = {
     latitude: 51.520269,
     longitude: -0.087066
 }
+const chiswellStreet = {
+    latitude: 51.520485,
+    longitude: -0.087519
+}
 
 //main functions
 
@@ -30,6 +34,10 @@ function findPlayerLocation(){
 }
 
 function getPlayerLocation (){
+
+    console.log("Locating..."); //change to a loading screen
+
+
     function success(position) {
 
         var myLatitude = position.coords.latitude;
@@ -41,7 +49,9 @@ function getPlayerLocation (){
         };
 
         // output.innerHTML = '<p>Latitude is ' + mylatitude + '° <br>Longitude is ' + mylongitude + '°</p>';
+       // alert("Your current coords are " +  playerCoords.latitude + playerCoords.longitude)
         renderMap(playerCoords)
+        console.log("Located"); 
     }
 
     function error() {
@@ -51,33 +61,6 @@ function getPlayerLocation (){
 
     navigator.geolocation.watchPosition(success, error)
 
-}
-
-
-function findDistanceBetweenPlayerAndLocation (p1, p2){
-
-        if (!p1 || !p2) {
-            return 0;
-        } else if (p1.latitude == p2.latitude && p1.longitude == p2.longitude) {
-            return 0;
-        } else {
-            var radlat1 = (Math.PI * p1.latitude) / 180;
-            var radlat2 = (Math.PI * p2.latitude) / 180;
-            var theta = p1.longitude- p2.longitude;
-            var radtheta = (Math.PI * theta) / 180;
-            var dist =
-                Math.sin(radlat1) * Math.sin(radlat2) +
-                Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-            if (dist > 1) {
-                dist = 1;
-            }
-            dist = Math.acos(dist);
-            dist = (dist * 180) / Math.PI;
-            dist = dist * 60 * 1.1515;
-            dist = dist * 1.609344;
-            
-        return dist;
-        }
 }
 
 function renderMap(position){
@@ -204,6 +187,11 @@ function renderStartButton(){
 
 function startGame(){
 
+    startButtonContainer.remove()
+    alert("The hunt has begun"); // change to popup
+
+    distanceMonitorFunction() 
+
     // alert("The hunt has begun"); // change to popup
     startButtonContainer.remove()
     
@@ -270,26 +258,3 @@ function endGame(){
 
 
 findPlayerLocation();
-
-
-
-
-// console.log("Locating..."); if we have time we will change this to a loading screen
-
-// function myFunction(x) {
-//     if (x.matches) { // If media query matches
-
-
-//     } else {
-//         alert("You need to be using a phone for this application to work")
-//         document.body.style.backgroundColor = "red";
-//     }
-// }
-
-// var x = window.matchMedia("(max-width: 700px)")
-
-// myFunction(x) // Call listener function at run time
-// x.addListener(myFunction) // Attach listener function on state changes
-
-
- 
