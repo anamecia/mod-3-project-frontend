@@ -1,6 +1,12 @@
 
 //global variables 
-const startButtonContainer = document.querySelector('.map-overlay');
+const startButtonContainer = document.querySelector('#start-btn');
+const timerContainer = document.querySelector('#timer')
+const minutesSpan = document.querySelector('#minutes')
+const secondsSpan = document.querySelector('#seconds')
+const dotesSpan = document.querySelector('#dotes')
+const infoContainer = document.querySelector('#info')
+const playersGameLocations = [1,2,3,4,5]
 let playerCoords = null;
 const wasabi = {
     latitude: 51.520269,
@@ -9,13 +15,15 @@ const wasabi = {
 
 //main functions
 
+const wasabiLatitude = 51.520269
+const wasabiLongitude = -0.087066
+
 function findPlayerLocation(){
 
     if (!navigator.geolocation) {
         alert("Geolocation is not supported by your browser"); //change to popup/modal
         return;
     }
-
         getPlayerLocation ()
 
     // navigator.geolocation.watchPosition(renderMap)
@@ -196,14 +204,70 @@ function renderStartButton(){
 
 function startGame(){
 
-    alert("The hunt has begun"); // change to popup
+    // alert("The hunt has begun"); // change to popup
     startButtonContainer.remove()
-
+    
     let distance = findDistanceBetweenPlayerAndLocation(wasabi, playerCoords)
 
-    debugger
-    
+    renderTimer();
+} 
+
+function renderTimer(){
+    let totalSeconds = 0
+    let setId1 = setInterval(setTime, 1000);
+
+    function setTime(){
+        ++totalSeconds
+        secondsSpan.innerText = pad(totalSeconds % 60);
+        minutesSpan.innerText = pad(parseInt(totalSeconds / 60));
+        dotesSpan.innerText = ":"
+    }
+
+    function pad(val){
+        let valString = val + "";
+        if (valString.length < 2) {
+          return "0" + valString;
+        } else {
+          return valString;
+        }
+    }
+    stopTimer(setId1)
 }
+
+function stopTimer(setId){
+    
+    let setId2 =setInterval(()=>{
+        if(parseInt(secondsSpan.innerText) >= 5){
+            clearInterval(setId)
+            if(playersGameLocations.length < 5){
+                clearInterval(setId2)
+                timerContainer.innerText = ""
+                missedLocation()
+            }else{
+                clearInterval(setId2)
+                timerContainer.innerText = ""
+                endGame()
+            }
+        }
+    },1500)   
+}
+
+function missedLocation(){
+    const missedLocationInfo = document.createElement("p")
+    missedLocationInfo.innerText = "You have missed your location!"
+    debugger
+    const newLocationButton = document.createElement("button")
+    newLocationButton.innerText = "Generate New Location"
+    infoContainer.append(missedLocationInfo, newLocationButton)
+}
+
+function endGame(){
+    const congratulationsInfo = document.createElement("p")
+    congratulationsInfo.innerText = `Congratulations you found ${playersGameLocations.length} in 00:00 time`
+    infoContainer.append(congratulationsInfo)
+}
+
+
 
 findPlayerLocation();
 
