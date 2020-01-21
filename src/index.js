@@ -2,6 +2,9 @@
 //global variables 
 const startButtonContainer = document.querySelector('#start-btn');
 const timerContainer = document.querySelector('#timer')
+const minutesSpan = document.querySelector('#minutes')
+const secondsSpan = document.querySelector('#seconds')
+const dotesSpan = document.querySelector('#dotes')
 
 let playerCoords = null;
 const wasabi = {
@@ -200,30 +203,23 @@ function renderStartButton(){
 
 function startGame(){
 
-    alert("The hunt has begun"); // change to popup
+    // alert("The hunt has begun"); // change to popup
     startButtonContainer.remove()
-
+    
     let distance = findDistanceBetweenPlayerAndLocation(wasabi, playerCoords)
 
     renderTimer();
-    
-}
+} 
 
 function renderTimer(){
-    let timer = document.createElement("div");
-    let minutesSpan = document.createElement("span");
-    let dotesSpan = document.createElement("span");
-    let secondsSpan = document.createElement("span");
-    dotesSpan.innerText = ":"
     let totalSeconds = 0
-    setInterval(setTime, 1000);
+    var myvar = setInterval(setTime, 1000);
 
     function setTime(){
         ++totalSeconds
         secondsSpan.innerText = pad(totalSeconds % 60);
         minutesSpan.innerText = pad(parseInt(totalSeconds / 60));
-        timer.append(minutesSpan, dotesSpan, secondsSpan)
-        timerContainer.append(timer)
+        dotesSpan.innerText = ":"
     }
 
     function pad(val){
@@ -234,6 +230,19 @@ function renderTimer(){
           return valString;
         }
     }
+    stopTimer(myvar)
+}
+
+function stopTimer(myvar){
+    
+    setInterval(()=>{
+        if(parseInt(minutesSpan.innerText) >= 5){
+            clearInterval(myvar)
+        }
+    },1000)
+        
+        
+    
 }
 
 findPlayerLocation();
