@@ -6,7 +6,7 @@ const minutesSpan = document.querySelector('#minutes')
 const secondsSpan = document.querySelector('#seconds')
 const dotesSpan = document.querySelector('#dotes')
 const infoContainer = document.querySelector('#info')
-const playersGameLocations = [1,2,3,4,5]
+const playersGameLocations = []
 let playerCoords = null;
 const wasabi = {
     latitude: 51.520269,
@@ -191,16 +191,11 @@ function startGame(){
     alert("The hunt has begun"); // change to popup
 
     distanceMonitorFunction() 
-
-    // alert("The hunt has begun"); // change to popup
-    startButtonContainer.remove()
     
-    let distance = findDistanceBetweenPlayerAndLocation(wasabi, playerCoords)
 
-    renderTimer();
 } 
 
-function renderTimer(){
+function renderTimer(distanceMonitor){
     let totalSeconds = 0
     let setId1 = setInterval(setTime, 1000);
 
@@ -219,16 +214,18 @@ function renderTimer(){
           return valString;
         }
     }
-    stopTimer(setId1)
+    stopTimer(setId1, distanceMonitor)
+
 }
 
-function stopTimer(setId){
+function stopTimer(setId, distanceMonitor){
     
     let setId2 =setInterval(()=>{
         if(parseInt(secondsSpan.innerText) >= 5){
             clearInterval(setId)
             if(playersGameLocations.length < 5){
                 clearInterval(setId2)
+                clearInterval(distanceMonitor)
                 timerContainer.innerText = ""
                 missedLocation()
             }else{

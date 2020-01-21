@@ -1,8 +1,11 @@
 
 function distanceMonitorFunction(){
+
     let distanceMonitor = setInterval(
     () => findDistanceBetweenPlayerAndLocation(playerCoords, chiswellStreet), 5000);
 
+    renderTimer(distanceMonitor)
+    
     function findDistanceBetweenPlayerAndLocation (p1, p2){
 
         if (!p1 || !p2) {
