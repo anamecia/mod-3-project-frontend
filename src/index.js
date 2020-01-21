@@ -5,7 +5,8 @@ const timerContainer = document.querySelector('#timer')
 const minutesSpan = document.querySelector('#minutes')
 const secondsSpan = document.querySelector('#seconds')
 const dotesSpan = document.querySelector('#dotes')
-
+const infoContainer = document.querySelector('#info')
+const playersGameLocations = []
 let playerCoords = null;
 const wasabi = {
     latitude: 51.520269,
@@ -213,7 +214,7 @@ function startGame(){
 
 function renderTimer(){
     let totalSeconds = 0
-    var myvar = setInterval(setTime, 1000);
+    let setId1 = setInterval(setTime, 1000);
 
     function setTime(){
         ++totalSeconds
@@ -230,20 +231,36 @@ function renderTimer(){
           return valString;
         }
     }
-    stopTimer(myvar)
+    stopTimer(setId1)
 }
 
-function stopTimer(myvar){
+function stopTimer(setId){
     
-    setInterval(()=>{
-        if(parseInt(minutesSpan.innerText) >= 5){
-            clearInterval(myvar)
+    let setId2 =setInterval(()=>{
+        if(parseInt(secondsSpan.innerText) >= 5){
+            clearInterval(setId)
+            if(playersGameLocations.length < 5){
+                clearInterval(setId2)
+                timerContainer.innerText = ""
+                missedLocation()
+
+            }else{
+
+            }
         }
-    },1000)
-        
-        
-    
+    },1500)   
 }
+
+function missedLocation(){
+    const missedLocationInfo = document.createElement("p")
+    missedLocationInfo.innerText = "You have missed your location!"
+    debugger
+    const newLocationButton = document.createElement("button")
+    newLocationButton.innerText = "Generate New Location"
+    infoContainer.append(missedLocationInfo, newLocationButton)
+}
+
+
 
 findPlayerLocation();
 
