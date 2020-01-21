@@ -2,6 +2,9 @@
 //global variables 
 const startButtonContainer = document.querySelector('.map-overlay');
 
+const wasabiLatitude = 51.520269
+const wasabiLongitude = -0.087066
+
 
 //main function
 function displayCurrentPosition(){
