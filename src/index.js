@@ -5,20 +5,17 @@ const startButtonContainer = document.querySelector('.map-overlay');
 
 //main function
 function displayCurrentPosition(){
-
     if (!navigator.geolocation) {
         alert("Geolocation is not supported by your browser");
     }else{
-       findPlayerLocation();
+        findPlayerLocation();
     }
 }
-
 
 function findPlayerLocation(){
     navigator.geolocation.watchPosition(renderMap)
     // navigator.geolocation.getCurrentPosition(renderMap)
 }
-
 
 function renderMap(position){
     startButtonContainer.innerText="";
@@ -28,7 +25,7 @@ function renderMap(position){
         container: 'map', // container id
         style: 'mapbox://styles/lopeariyo/ck5jfumur1xbt1imwh82f1ugp', //hosted style id
         center: [position.coords.longitude, position.coords.latitude], // starting position [longitude, latitude], needs to be generated and shown on map 
-        zoom: 20 // starting zoom
+        zoom: 15 // starting zoom
     });
 
 
@@ -88,8 +85,8 @@ function renderMap(position){
     renderStartButton();
 
     map.on('load', () => { 
-      
-       map.addImage("pulsing-dot", pulsingDot, { pixelRatio: 2 });
+    
+        map.addImage("pulsing-dot", pulsingDot, { pixelRatio: 2 });
         
         setInterval(
             ()=> map.getSource('playerLocation').setData(
