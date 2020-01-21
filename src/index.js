@@ -1,33 +1,90 @@
 
 //global variables 
-const startButtonContainer = document.querySelector('.map-overlay');
+const startButtonContainer = document.querySelector('#start-btn');
+const timerContainer = document.querySelector('#timer')
+
+let playerCoords = null;
+const wasabi = {
+    latitude: 51.520269,
+    longitude: -0.087066
+}
+
+//main functions
 
 const wasabiLatitude = 51.520269
 const wasabiLongitude = -0.087066
 
+function findPlayerLocation(){
 
-//main function
-function displayCurrentPosition(){
     if (!navigator.geolocation) {
-        alert("Geolocation is not supported by your browser");
-    }else{
-        findPlayerLocation();
+        alert("Geolocation is not supported by your browser"); //change to popup/modal
+        return;
     }
+        getPlayerLocation ()
+
+    // navigator.geolocation.watchPosition(renderMap)
 }
 
-function findPlayerLocation(){
-    navigator.geolocation.watchPosition(renderMap)
-    // navigator.geolocation.getCurrentPosition(renderMap)
+function getPlayerLocation (){
+    function success(position) {
+
+        var myLatitude = position.coords.latitude;
+        var myLongitude = position.coords.longitude;
+
+        playerCoords = {
+            latitude: myLatitude,
+            longitude: myLongitude
+        };
+
+        // output.innerHTML = '<p>Latitude is ' + mylatitude + '° <br>Longitude is ' + mylongitude + '°</p>';
+        renderMap(playerCoords)
+    }
+
+    function error() {
+        // output.innerHTML = "Unable to retrieve your location";
+        alert("Unable to retrieve your location");
+    }
+
+    navigator.geolocation.watchPosition(success, error)
+
+}
+
+
+function findDistanceBetweenPlayerAndLocation (p1, p2){
+
+        if (!p1 || !p2) {
+            return 0;
+        } else if (p1.latitude == p2.latitude && p1.longitude == p2.longitude) {
+            return 0;
+        } else {
+            var radlat1 = (Math.PI * p1.latitude) / 180;
+            var radlat2 = (Math.PI * p2.latitude) / 180;
+            var theta = p1.longitude- p2.longitude;
+            var radtheta = (Math.PI * theta) / 180;
+            var dist =
+                Math.sin(radlat1) * Math.sin(radlat2) +
+                Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+            if (dist > 1) {
+                dist = 1;
+            }
+            dist = Math.acos(dist);
+            dist = (dist * 180) / Math.PI;
+            dist = dist * 60 * 1.1515;
+            dist = dist * 1.609344;
+            
+        return dist;
+        }
 }
 
 function renderMap(position){
+
     startButtonContainer.innerText="";
     mapboxgl.accessToken = 'pk.eyJ1IjoibG9wZWFyaXlvIiwiYSI6ImNrNWpkamFrcTAyM2IzZXBja3dncmtld3AifQ.-T1q9Tw23a3tqqJ9CYFllg';
 
     let map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'mapbox://styles/lopeariyo/ck5jfumur1xbt1imwh82f1ugp', //hosted style id
-        center: [position.coords.longitude, position.coords.latitude], // starting position [longitude, latitude], needs to be generated and shown on map 
+        center: [position.longitude, position.latitude], // starting position [longitude, latitude], needs to be generated and shown on map 
         zoom: 15 // starting zoom
     });
 
@@ -96,7 +153,7 @@ function renderMap(position){
                 {
                 "geometry":{
                     "type": "Point",
-                    "coordinates":[position.coords.longitude,position.coords.latitude]}, 
+                    "coordinates":[position.longitude,position.latitude]}, 
                     "type": "Feature", 
                     "properties":{}
                 }), 2000);
@@ -111,8 +168,8 @@ function renderMap(position){
                     'geometry': {
                         'type': 'Point',
                         'coordinates': [
-                            position.coords.longitude,
-                            position.coords.latitude
+                            position.longitude,
+                            position.latitude
                         ]
                     }
                 }
@@ -142,12 +199,46 @@ function renderStartButton(){
 }
 
 function startGame(){
+
+    alert("The hunt has begun"); // change to popup
+    startButtonContainer.remove()
+
+    let distance = findDistanceBetweenPlayerAndLocation(wasabi, playerCoords)
+
+    renderTimer();
     
-    alert("The hunt has begun");
 }
 
+function renderTimer(){
+    let timer = document.createElement("div");
+    let minutesSpan = document.createElement("span");
+    let dotesSpan = document.createElement("span");
+    let secondsSpan = document.createElement("span");
+    dotesSpan.innerText = ":"
+    let totalSeconds = 0
+    setInterval(setTime, 1000);
 
-displayCurrentPosition();
+    function setTime(){
+        ++totalSeconds
+        secondsSpan.innerText = pad(totalSeconds % 60);
+        minutesSpan.innerText = pad(parseInt(totalSeconds / 60));
+        timer.append(minutesSpan, dotesSpan, secondsSpan)
+        timerContainer.append(timer)
+    }
+
+    function pad(val){
+        let valString = val + "";
+        if (valString.length < 2) {
+          return "0" + valString;
+        } else {
+          return valString;
+        }
+    }
+}
+
+findPlayerLocation();
+
+
 
 
 // console.log("Locating..."); if we have time we will change this to a loading screen
