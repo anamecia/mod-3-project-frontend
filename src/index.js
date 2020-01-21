@@ -6,7 +6,7 @@ const minutesSpan = document.querySelector('#minutes')
 const secondsSpan = document.querySelector('#seconds')
 const dotesSpan = document.querySelector('#dotes')
 const infoContainer = document.querySelector('#info')
-const playersGameLocations = []
+const playersGameLocations = [1,2,3,4,5]
 let playerCoords = null;
 const wasabi = {
     latitude: 51.520269,
@@ -243,9 +243,10 @@ function stopTimer(setId){
                 clearInterval(setId2)
                 timerContainer.innerText = ""
                 missedLocation()
-
             }else{
-
+                clearInterval(setId2)
+                timerContainer.innerText = ""
+                endGame()
             }
         }
     },1500)   
@@ -258,6 +259,12 @@ function missedLocation(){
     const newLocationButton = document.createElement("button")
     newLocationButton.innerText = "Generate New Location"
     infoContainer.append(missedLocationInfo, newLocationButton)
+}
+
+function endGame(){
+    const congratulationsInfo = document.createElement("p")
+    congratulationsInfo.innerText = `Congratulations you found ${playersGameLocations.length} in 00:00 time`
+    infoContainer.append(congratulationsInfo)
 }
 
 
