@@ -10,6 +10,7 @@ function trackDistance(locationCoordinates){
         if (!playerPosition || !locationCoordinates) {
             return 0.00;
         } else if (playerPosition.latitude == locationCoordinates.latitude && playerPosition.longitude == locationCoordinates.longitude) {
+            playersGameLocations.push(locationCoordinates);
             showDistanceBetweenPlayerAndLocation(0.00);
             return 0.00; 
         } else {
@@ -41,17 +42,19 @@ function trackDistance(locationCoordinates){
 
     function showDistanceBetweenPlayerAndLocation(distance){
         if (distance == 0.00 && distance <= 0.01){
-            // alert("You have reached your destination")
-            stopDistanceTracker()
-            playerTimes.push(`${minutesSpan.innerText}:${secondsSpan.innerText}`)
-            scoreSystem()
-            timerContainer.innerText = ""
+            alert("You have reached your destination")
+            stopDistanceTracker();
+            playerTimes.push(`${minutesSpan.innerText}:${secondsSpan.innerText}`);
+            scoreSystem();
+            minutesSpan.innerText = ""
+            secondsSpan.innerText = ""
+            colonSpan.innerText = ""
+            clearInterval(window.timerMonitor)
             if (playerTimes.length === 5){
                 renderEndOfGameInfo()
             }else{
                 renderLocationFound()
             }
-            
         } else if (distance > 0.01 && distance <= 1.03) {
             mapStyleID = "lopeariyo/ck5ojqkga1msi1io355h7k2so"
         }   else if (distance > 1.03 && distance <= 1.78) {
@@ -69,7 +72,7 @@ function trackDistance(locationCoordinates){
 
 function trackTime(distanceMonitor){
     let totalSeconds = 0
-    let timerMonitor = setInterval(setTime, 1000);
+    window.timerMonitor = setInterval(setTime, 1000);
 
     function setTime(){
         ++totalSeconds
@@ -86,7 +89,7 @@ function trackTime(distanceMonitor){
             return valString;
         }
     }
-    stopTimeTracker(timerMonitor, distanceMonitor)
+    stopTimeTracker(window.timerMonitor, distanceMonitor)
 
 }
 
@@ -112,7 +115,6 @@ function stopTimeTracker(timerMonitor, distanceMonitor){
                 secondsSpan.innerText = ""
                 colonSpan.innerText = ""
                 renderEndOfGameInfo()
-                debugger
             }
         }
     },1500)   
@@ -124,7 +126,8 @@ function getRandomLocation(){
     get(locationsUrl)
     .then(locations => Math.floor(Math.random()*(1-locations.length)+locations.length))
     .then((index) => get(`${locationsUrl}${index}`))
-    .then (location => trackDistance({latitude: location.latitude, longitude: location.longitude})) 
+    // .then (location => trackDistance({latitude: location.latitude, longitude: location.longitude})) 
+    trackDistance(playerCoords)
 }
 
 function scoreSystem(){
