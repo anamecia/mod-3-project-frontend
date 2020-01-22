@@ -1,3 +1,5 @@
+//
+
 // Elements Finder
 const startButtonContainer = document.querySelector('#start-btn');
 const timerContainer = document.querySelector('#timer')
@@ -9,6 +11,7 @@ const infoContainer = document.querySelector('#info')
 //Global Variables 
 
 let playerCoords = null;
+let mapStyleID = null;
 
 const wasabi = {
     latitude: 51.520269,
@@ -22,6 +25,12 @@ const mands = {
     latitude: 51.59599,
     longitude: -0.087077
 }
+
+const croydon = {
+    latitude: 51.378643,
+    longitude: -0.102535
+}
+
 
 const playersGameLocations = []
 
@@ -46,7 +55,7 @@ function findPlayerLocation(){
             longitude: myLongitude
         };
         
-        renderMap(playerCoords)
+        renderMap(playerCoords, mapStyleID)
         console.log("Located"); 
     }
 

@@ -10,25 +10,36 @@ function createElement(tag, options = {}) {
     return el
 }
 
+
+
+
 // Render Element Functions
 
-function renderMap(position){
+function renderMap(position, mapStyleID){
 
     
     startButtonContainer.innerText="";
 
-
     mapboxgl.accessToken = 'pk.eyJ1IjoibG9wZWFyaXlvIiwiYSI6ImNrNWpkamFrcTAyM2IzZXBja3dncmtld3AifQ.-T1q9Tw23a3tqqJ9CYFllg';
+
 
     let map = new mapboxgl.Map({
         container: 'map', // container id
-        style: 'mapbox://styles/lopeariyo/ck5jfumur1xbt1imwh82f1ugp', //hosted style id
+        style: "mapbox://styles/lopeariyo/ck5jfumur1xbt1imwh82f1ugp", //hosted style id
         center: [position.longitude, position.latitude], // starting position [longitude, latitude], needs to be generated and shown on map 
         zoom: 15 // starting zoom
     });
 
+    function switchLayer(layerID) {
+        map.setStyle(`mapbox://styles/${layerID}`);
+    }
 
-    var size = 200;
+    if (mapStyleID){
+        switchLayer(mapStyleID)
+    }
+
+
+    var size = 100;
 
     // implementation of CustomLayerInterface to draw a pulsing dot icon on the map
     // see https://docs.mapbox.com/mapbox-gl-js/api/#customlayerinterface for more info
@@ -125,6 +136,7 @@ function renderMap(position){
             }
         });
     });
+
 }
 
 function renderStartButton(){

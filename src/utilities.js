@@ -1,7 +1,7 @@
 function trackDistance(){
 
     let distanceMonitor = setInterval(
-    () => findDistanceBetweenPlayerAndLocation(playerCoords, wasabi), 2000);
+    () => findDistanceBetweenPlayerAndLocation(playerCoords, croydon), 1000);
 
     trackTime(distanceMonitor)
 
@@ -43,13 +43,12 @@ function trackDistance(){
         if (distance == 0.00 && distance <= 0.01){
             alert("You have reached your destination")
             stopDistanceTracker()
-        } else if (distance > 0.01 && distance <= 0.03) {
-            alert("This will make the map turn red");
-        }   else if (distance > 0.03 && distance <= 0.06) {
-            alert("This will make the map turn purple");
-        } else if (distance > 0.06) {
-            debugger
-                alert("This will make the map turn blue");
+        } else if (distance > 0.01 && distance <= 1.03) {
+            mapStyleID = "lopeariyo/ck5ojqkga1msi1io355h7k2so"
+        }   else if (distance > 1.03 && distance <= 1.78) {
+            mapStyleID = "lopeariyo/ck5ojug7b0nrq1in6l36o7xs8"
+        } else if (distance > 1.78) {
+            mapStyleID = "lopeariyo/ck5ojucbs1n2u1invuue79hsl"
         }
     }
 
@@ -85,7 +84,7 @@ function trackTime(distanceMonitor){
 function stopTimeTracker(timerMonitor, distanceMonitor){
     
     let hybridMonitor = setInterval(()=>{
-        if(parseInt(secondsSpan.innerText) >= 5){
+        if(parseInt(secondsSpan.innerText) >= 55){
             clearInterval(timerMonitor)
             if(playersGameLocations.length < 5){
                 clearInterval(hybridMonitor)
