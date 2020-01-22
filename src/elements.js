@@ -147,16 +147,26 @@ function renderStartButton(){
     startButtonContainer.append(startButton);
 }
 
+function renderLocationFound(){
+    const locationFoundInfo = document.createElement("p")
+    locationFoundInfo.innerText = "You have arraived at you location"
+    const newLocationButton = document.createElement("button")
+    newLocationButton.innerText = "Generate New Location"
+    newLocationButton.addEventListener("touchstart", startGame)
+    infoContainer.append(locationFoundInfo, newLocationButton)
+}
+
 function renderOutOfTimeStatus(){
     const missedLocationInfo = document.createElement("p")
     missedLocationInfo.innerText = "You didn't get there in time :(!"
     const newLocationButton = document.createElement("button")
     newLocationButton.innerText = "Generate New Location"
+    newLocationButton.addEventListener("touchstart", startGame)
     infoContainer.append(missedLocationInfo, newLocationButton)
 }
 
 function renderEndOfGameInfo(){
     const congratulationsInfo = document.createElement("p")
-    congratulationsInfo.innerText = `Congratulations you found ${playersGameLocations.length} in 00:00 time`
+    congratulationsInfo.innerText = `Congratulations you found ${playersGameLocations.length} with a score of ${playerScore}`
     infoContainer.append(congratulationsInfo)
 }

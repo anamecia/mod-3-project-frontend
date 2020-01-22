@@ -1,7 +1,7 @@
-function trackDistance(){
-
+function trackDistance(locationCoordinates){
+    
     let distanceMonitor = setInterval(
-    () => findDistanceBetweenPlayerAndLocation(playerCoords, croydon), 1000);
+    () => findDistanceBetweenPlayerAndLocation(playerCoords, locationCoordinates), 1000);
 
     trackTime(distanceMonitor)
 
@@ -41,8 +41,17 @@ function trackDistance(){
 
     function showDistanceBetweenPlayerAndLocation(distance){
         if (distance == 0.00 && distance <= 0.01){
-            alert("You have reached your destination")
+            // alert("You have reached your destination")
             stopDistanceTracker()
+            playerTimes.push(`${minutesSpan.innerText}:${secondsSpan.innerText}`)
+            scoreSystem()
+            timerContainer.innerText = ""
+            if (playerTimes.length === 5){
+                renderEndOfGameInfo()
+            }else{
+                renderLocationFound()
+            }
+            
         } else if (distance > 0.01 && distance <= 1.03) {
             mapStyleID = "lopeariyo/ck5ojqkga1msi1io355h7k2so"
         }   else if (distance > 1.03 && distance <= 1.78) {
@@ -84,18 +93,51 @@ function trackTime(distanceMonitor){
 function stopTimeTracker(timerMonitor, distanceMonitor){
     
     let hybridMonitor = setInterval(()=>{
-        if(parseInt(secondsSpan.innerText) >= 55){
+        if(parseInt(secondsSpan.innerText) >= 5){
             clearInterval(timerMonitor)
-            if(playersGameLocations.length < 5){
+
+            if(playerTimes.length < 4){
+                playerTimes.push("00:00")
                 clearInterval(hybridMonitor)
                 clearInterval(distanceMonitor)
-                timerContainer.innerText = ""
+                minutesSpan.innerText = ""
+                secondsSpan.innerText = ""
+                colonSpan.innerText = ""
                 renderOutOfTimeStatus()
             }else{
+                playerTimes.push("00:00")
                 clearInterval(hybridMonitor)
-                timerContainer.innerText = ""
-                endGame()
+                clearInterval(distanceMonitor)
+                minutesSpan.innerText = ""
+                secondsSpan.innerText = ""
+                colonSpan.innerText = ""
+                renderEndOfGameInfo()
+                debugger
             }
         }
     },1500)   
 }
+
+function getRandomLocation(){
+    const locationsUrl = "http://localhost:3000/locations/"
+
+    get(locationsUrl)
+    .then(locations => Math.floor(Math.random()*(1-locations.length)+locations.length))
+    .then((index) => get(`${locationsUrl}${index}`))
+    .then (location => trackDistance({latitude: location.latitude, longitude: location.longitude})) 
+}
+
+function scoreSystem(){
+    if( parseInt(minutesSpan.innerText) < 1){
+        playerScore += 10;
+    }else if(( parseInt(minutesSpan.innerText) < 2)){
+        playerScore += 8;
+    }else if(( parseInt(minutesSpan.innerText) < 3)){
+        playerScore += 6;
+    }else if(( parseInt(minutesSpan.innerText) < 4)){
+        playerScore += 4;
+    }else{
+        playerScore += 2;
+    }
+}
+
