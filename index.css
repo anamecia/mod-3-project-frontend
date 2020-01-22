@@ -42,8 +42,6 @@ body {
 }
 
 button {
-    /* left: 37%; */
-    /* margin-top:320%; */
     background-color: #ffa500;
     border: none;
     border-radius: 5px;
@@ -52,11 +50,10 @@ button {
     text-align: center;
     color: whitesmoke;
     font-size: 24px;
-    /* justify-self: center; */
 }
-
-button:click {
+/* 
+button:hover {
         background-color: whitesmoke;
         border: #ffa500 solid 1px;
         color: #ffa500;
-}
+} */

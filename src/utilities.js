@@ -1,49 +1,101 @@
-
-function distanceMonitorFunction(){
+function trackDistance(){
 
     let distanceMonitor = setInterval(
-    () => findDistanceBetweenPlayerAndLocation(playerCoords, chiswellStreet), 5000);
+    () => findDistanceBetweenPlayerAndLocation(playerCoords, croydon), 1000);
 
-    renderTimer(distanceMonitor)
-    
-    function findDistanceBetweenPlayerAndLocation (p1, p2){
+    trackTime(distanceMonitor)
 
-        if (!p1 || !p2) {
+    function findDistanceBetweenPlayerAndLocation (playerPosition, locationCoordinates){
+
+        if (!playerPosition || !locationCoordinates) {
             return 0.00;
-        } else if (p1.latitude == p2.latitude && p1.longitude == p2.longitude) {
+        } else if (playerPosition.latitude == locationCoordinates.latitude && playerPosition.longitude == locationCoordinates.longitude) {
             showDistanceBetweenPlayerAndLocation(0.00);
             return 0.00; 
         } else {
-            var radlat1 = (Math.PI * p1.latitude) / 180;
-            var radlat2 = (Math.PI * p2.latitude) / 180;
-            var theta = p1.longitude- p2.longitude;
-            var radtheta = (Math.PI * theta) / 180;
-            var dist =
-                Math.sin(radlat1) * Math.sin(radlat2) +
-                Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta)
+            var playersLatitudeInRadians = (Math.PI * playerPosition.latitude) / 180; 
+            var locationLatitudeInRadians = (Math.PI * locationCoordinates.latitude) / 180; 
+            var theta = playerPosition.longitude - locationCoordinates.longitude;
+            var thetaInRadians = (Math.PI * theta) / 180;
+            
+            var distance =
+                Math.sin(playersLatitudeInRadians) * Math.sin(locationLatitudeInRadians) +
+                Math.cos(playersLatitudeInRadians) * Math.cos(locationLatitudeInRadians) * Math.cos(thetaInRadians)
 
-            if (dist > 1) {
-                dist = 1;
+            if (distance > 1) {
+                distance = 1;
             }
 
-            dist = Math.acos(dist);
-            dist = (dist * 180) / Math.PI;
-            dist = dist * 60 * 1.1515;
-            dist = (dist * 1.609344);
+            distance = Math.acos(distance);
+            distance = (distance * 180) / Math.PI;
+            distance = distance * 60 * 1.1515;
+            distance = (distance * 1.609344);
 
-            showDistanceBetweenPlayerAndLocation(dist);
+            shortenedDistance = distance.toFixed(2);
 
-            return dist.toFixed(2);
+            showDistanceBetweenPlayerAndLocation(shortenedDistance);
+
+            return shortenedDistance;
         }
     }
 
     function showDistanceBetweenPlayerAndLocation(distance){
-        if (distance != 0.00){
-            alert("You are " + distance.toFixed(2) + " km away from your location");
-        } else {
+        if (distance == 0.00 && distance <= 0.01){
             alert("You have reached your destination")
-            clearInterval(distanceMonitor)
+            stopDistanceTracker()
+        } else if (distance > 0.01 && distance <= 1.03) {
+            mapStyleID = "lopeariyo/ck5ojqkga1msi1io355h7k2so"
+        }   else if (distance > 1.03 && distance <= 1.78) {
+            mapStyleID = "lopeariyo/ck5ojug7b0nrq1in6l36o7xs8"
+        } else if (distance > 1.78) {
+            mapStyleID = "lopeariyo/ck5ojucbs1n2u1invuue79hsl"
         }
     }
 
+    function stopDistanceTracker(){
+        clearInterval(distanceMonitor)
+    }
+
+}
+
+function trackTime(distanceMonitor){
+    let totalSeconds = 0
+    let timerMonitor = setInterval(setTime, 1000);
+
+    function setTime(){
+        ++totalSeconds
+        secondsSpan.innerText = pad(totalSeconds % 60);
+        minutesSpan.innerText = pad(parseInt(totalSeconds / 60));
+        colonSpan.innerText = ":"
+    }
+
+    function pad(val){
+        let valString = val + "";
+        if (valString.length < 2) {
+            return "0" + valString;
+        } else {
+            return valString;
+        }
+    }
+    stopTimeTracker(timerMonitor, distanceMonitor)
+
+}
+
+function stopTimeTracker(timerMonitor, distanceMonitor){
+    
+    let hybridMonitor = setInterval(()=>{
+        if(parseInt(secondsSpan.innerText) >= 55){
+            clearInterval(timerMonitor)
+            if(playersGameLocations.length < 5){
+                clearInterval(hybridMonitor)
+                clearInterval(distanceMonitor)
+                timerContainer.innerText = ""
+                renderOutOfTimeStatus()
+            }else{
+                clearInterval(hybridMonitor)
+                timerContainer.innerText = ""
+                endGame()
+            }
+        }
+    },1500)   
 }
