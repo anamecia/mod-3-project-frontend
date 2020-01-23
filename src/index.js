@@ -1,4 +1,4 @@
-//
+
 
 // Elements Finder
 const startButtonContainer = document.querySelector('#start-btn');
@@ -49,8 +49,8 @@ function findPlayerLocation(){
 
     function success(position) {
 
-        var myLatitude = position.coords.latitude;
-        var myLongitude = position.coords.longitude;
+        let myLatitude = position.coords.latitude;
+        let myLongitude = position.coords.longitude;
 
         playerCoords = {
             latitude: myLatitude,
@@ -73,8 +73,8 @@ function startGame(){
     startButtonContainer.remove()
     infoContainer.innerText = ""
     alert("Answer the clues, to reveal the locations"); // change to popup
-
     getRandomLocation() 
+    renderCompass(playerCoords)
 } 
 
 findPlayerLocation();

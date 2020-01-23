@@ -1,34 +1,98 @@
 body {
     margin: 0;
     padding: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
 }
+
+.main-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+
+/* layers */
+
+.map-base-layer {
+    display: inline;
+    z-index: 0;
+
+}
+
+.map-overlay-1{
+    position: relative;
+    z-index: 2;
+    height: 60vh;
+    width: 60vh;
+
+}
+
+.map-overlay-2{
+    position: relative;
+    z-index: 3;
+    height: 20vh;
+    width: 15rem;
+    padding: 10px;
+    margin-bottom: 70px;
+    justify-content: center;
+    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+
+}
+
+
+/*containers*/
+
+.elements-container {
+    align-items: center;
+
+}
+
+.compass-container {
+
+}
+
+.map {
+
+}
+
+/*map stuff*/
 
 #map {
     position: absolute;
     top: 0;
     bottom: 0;
+    height:100%;
     width: 100%;
 }
-/* map box layer stuff */
 
-.map-overlay {
-    justify-content: center;
-    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    z-index: 2;
-    height: 4rem;
-    width: 15rem;
-    padding: 10px;
-    margin-bottom: 70px;
-    }
+/*compass stuff*/
+#compass {
+    position: absolute;
+    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/141041/rdr-compass.png);
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+}
+
+#compass-map { 
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+    height: 81%;
+    width: 81%;
+    left: 50%;
+    top: 50%;
+}
+
+/*element stuff*/
 
 #timer{
-    font-size: 100px;
+    height: 20vh;
+    width: 60vw;
+    text-align: center;
     color: #ffa500;
+    font-size: 80px;
+    
 }
 
 #info{
@@ -45,15 +109,12 @@ button {
     background-color: #ffa500;
     border: none;
     border-radius: 5px;
-    height: 4rem;
-    width: 15rem;
+    height: 7vh;
+    width: 60vw;
     text-align: center;
     color: whitesmoke;
     font-size: 24px;
 }
-/* 
-button:hover {
-        background-color: whitesmoke;
-        border: #ffa500 solid 1px;
-        color: #ffa500;
-} */
+
+
+

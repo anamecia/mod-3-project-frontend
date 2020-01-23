@@ -1,0 +1,47 @@
+body {
+    font: normal 16px/1.5 "Helvetica Neue", sans-serif;
+    padding-top: 50px;
+    border: 1px solid #ccc;
+    height: 500px;
+    width: 500px;
+}
+
+.main-container {
+    position: absolute;
+    font-size: 2.5rem;
+    width: 400px;
+    line-height: 400px;
+    text-align: center;
+}
+
+.map-overlay-1 {
+    position: absolute;
+    font-size: 2.5rem;
+    width: 50px;
+    line-height: 50px;
+    text-align: center;
+    z-index: 2;
+}
+
+.map-overlay-2 {
+    position: absolute;
+    font-size: 2.5rem;
+    width: 400px;
+    line-height: 50px;
+    text-align: center;
+    z-index: 3;
+}
+
+
+
+.elements-container {
+    background: green;
+}
+
+.compass-container {
+    background: yellow;
+}
+
+.map {
+    background: red;
+}

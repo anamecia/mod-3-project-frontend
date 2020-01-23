@@ -3,6 +3,7 @@ function trackDistance(locationCoordinates){
     let distanceMonitor = setInterval(
     () => findDistanceBetweenPlayerAndLocation(playerCoords, locationCoordinates), 1000);
 
+
     trackTime(distanceMonitor)
 
     function findDistanceBetweenPlayerAndLocation (playerPosition, locationCoordinates){
@@ -60,6 +61,7 @@ function trackDistance(locationCoordinates){
         }   else if (distance > 0.09 && distance <= 1.00) {
             mapStyleID = "lopeariyo/ck5ojug7b0nrq1in6l36o7xs8"
         } else if (distance > 1.00) {
+
             mapStyleID = "lopeariyo/ck5ojucbs1n2u1invuue79hsl"
         }
     }
