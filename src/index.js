@@ -33,13 +33,15 @@ const croydon = {
 
 
 const playersGameLocations = []
+const playerTimes = []
+let playerScore = 0
 
 //Main Functions
 
 function findPlayerLocation(){
 
     if (!navigator.geolocation) {
-        alert("Geolocation is not supported by your browser"); //change to popup/modal
+        alert("Geolocation is not supported by your browser!"); //change to popup/modal
         return;
     }
 
@@ -69,9 +71,10 @@ function findPlayerLocation(){
 
 function startGame(){
     startButtonContainer.remove()
+    infoContainer.innerText = ""
     alert("Answer the clues, to reveal the locations"); // change to popup
 
-    trackDistance() 
+    getRandomLocation() 
 } 
 
 findPlayerLocation();
