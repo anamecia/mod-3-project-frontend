@@ -45,7 +45,8 @@ function trackDistance(locationCoordinates){
         
     
             if (distance == 0.00 && distance <= 0.02){
-                alert("You found it!!!!!")
+                distanceClue = "You found it!!!!!"
+                showDistanceClue(distanceClue)
                 compassMapStyleID = "lopeariyo/ck5qjrkxu1wvr1ip8eg2jetse" //green map
                 stopDistanceTracker();
                 playerTimes.push(`${minutesSpan.innerText}:${secondsSpan.innerText}`);
@@ -60,24 +61,35 @@ function trackDistance(locationCoordinates){
                     renderLocationFound()
                 }
             } else if (distance > 0.02 && distance <= 0.06) {
-                alert("Hot Hot!")  
+                distanceClue = "Hot Hot!"
+                showDistanceClue(distanceClue)  
                 compassMapStyleID = "lopeariyo/ck5ojqkga1msi1io355h7k2so" //red 1
             }   else if (distance > 0.06 && distance <= 0.12) {
                 compassMapStyleID = "lopeariyo/ck5qpp5dt0su31imsgbp2cocq" //red 2
-                alert("On it like a scotch bonnet!")    
+                distanceClue = "On it like a scotch bonnet!"
+                showDistanceClue(distanceClue) 
             } else if (distance > 0.12 && distance <= 0.20) {
                 compassMapStyleID = "lopeariyo/ck5qpowi4225v1ilcssdzehns" //purple 1
-                alert("Getting hotter, looks like you don't need a blanket anymore!")
+                distanceClue = "Getting hotter, looks like you don't need a blanket anymore!"
+                showDistanceClue(distanceClue)
             } else if (distance > 0.20 && distance <= 0.36) {
                 compassMapStyleID = "lopeariyo/ck5ojug7b0nrq1in6l36o7xs8" // purple 2
-                alert("Getting warmer, you still need a blanket though!") 
+                distanceClue = "Getting warmer, you still need a blanket though!"
+                showDistanceClue(distanceClue)
             } else if (distance > 0.36 && distance <= 0.68) {
                 compassMapStyleID = "lopeariyo/ck5ojucbs1n2u1invuue79hsl"// blue 1
-                alert("Brrrr... cold!")  
+                distanceClue = "Brrrr... cold!"
+                showDistanceClue(distanceClue)
             } else if (distance > 0.68 ) {
                 compassMapStyleID = "lopeariyo/k5qpp1bs0su21imsxp6dq29l" // blue 2
-                alert("Freezing... Game over!") // 
+                distanceClue = "Freezing... Game over!" 
+                showDistanceClue(distanceClue)
             } 
+    }
+
+    function showDistanceClue(string){
+        modalContainer.classList.remove("hidden")
+        distanceClueDisplay.innerText = string
     }
 
     function stopDistanceTracker(){
@@ -112,7 +124,7 @@ function trackTime(distanceMonitor){
 function stopTimeTracker(timerMonitor, distanceMonitor){
     
     let hybridMonitor = setInterval(()=>{
-        if(parseInt(minutesSpan.innerText) >= 5){
+        if(parseInt(secondsSpan.innerText) >= 5){
             clearInterval(timerMonitor)
 
             if(playerTimes.length < 4){
@@ -136,14 +148,24 @@ function stopTimeTracker(timerMonitor, distanceMonitor){
     },1500)   
 }
 
-function getRandomLocation(){
-    const locationsUrl = "https://fddd23ce.ngrok.io/locations/"
+function getRandomIndex(){
 
     get(locationsUrl)
     .then(locations => Math.floor(Math.random()*(1-locations.length)+locations.length))
-    .then((index) => get(`${locationsUrl}${index}`))
-    .then (location => trackDistance({latitude: location.latitude, longitude: location.longitude})) 
+    .then((index) => getRandomLocation(index)) 
+    
+}
+
+function getRandomLocation(index){
+    
+    get(`${locationsUrl}${index}`)
+    .then(location => helperFunction(location)) 
+}
+
+function helperFunction(location){
+    trackDistance({latitude: location.latitude, longitude: location.longitude})
     // trackDistance(playerCoords)
+    clue.innerText = location.clue
 }
 
 function scoreSystem(){

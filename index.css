@@ -5,7 +5,7 @@ body {
 }
 
 .main-container {
-    height: 95vh;
+    height: 93vh;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -150,14 +150,24 @@ button {
     border-radius: 5%;
     text-align: center;
     margin-bottom: 70px;
+    font-size: 1rem;
 }
 
 #close-modal{
     background-color: transparent;
     border: none;
     color: #ffa500;
+    height: 4vh;
     width:5vh;
     margin-left: 200px;
+}
+
+#clue{
+    margin:2px 0px;
+}
+
+#distance-clue{
+    margin:6px 0px
 }
 
 
