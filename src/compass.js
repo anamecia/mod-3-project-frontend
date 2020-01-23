@@ -6,7 +6,7 @@ function renderCompass(position){
         container: 'compass-map', // container id
         style: "mapbox://styles/lopeariyo/ck5jfumur1xbt1imwh82f1ugp", //plain map
         center: [position.longitude, position.latitude], // starting position [longitude, latitude], needs to be generated and shown on map 
-        zoom: 18 // starting zoom
+        zoom: 15 // starting zoom
     });
 
     function switchCompassStyle(layerID) {
@@ -118,6 +118,13 @@ function renderCompass(position){
         //     document.getElementById("compass").style.transform = `rotate(${heading}deg)`
         //     compass.setBearing(heading)
         // })
+
+        window.addEventListener("deviceorientation", function(event) {
+            
+            let alpha = event.alpha
+            document.querySelector("#compass").style.transform = `rotate(${alpha}deg)` //compass container image
+            compass.setBearing(alpha) //compass map
+        })
     })
 
 }
