@@ -94,7 +94,7 @@ body {
     width: 60vw;
     text-align: center;
     color: #ffa500;
-    font-size: 6rem;
+    font-size: 7rem;
     font-family: 'ZCOOL QingKe HuangYou';
     
 }
@@ -144,5 +144,20 @@ button {
     margin: 95px;
 }
 
+.modal{
+    height: 20vh;
+    background-color: white;
+    border-radius: 5%;
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+#close-modal{
+    background-color: transparent;
+    border: none;
+    color: #ffa500;
+    width:5vh;
+    margin-left: 200px;
+}
 
 

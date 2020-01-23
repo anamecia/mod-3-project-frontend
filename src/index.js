@@ -9,6 +9,7 @@ const colonSpan = document.querySelector('#colon')
 const infoContainer = document.querySelector('#info')
 const loadingContainer = document.querySelector('#loading')
 const compassContainer = document.querySelector('.map-overlay-1')
+const modalContainer = document.querySelector('.modal')
 
 //Global Variables 
 
@@ -79,9 +80,16 @@ function findPlayerLocation(){
 function startGame(){
     startButtonContainer.remove()
     infoContainer.innerText = ""
-    alert("Answer the clues, to reveal the locations"); // change to popup
+    // alert("Answer the clues, to reveal the locations"); // change to popup
+    modalContainer.querySelector('p').innerText = "Answer the clues, to reveal the locations"
+    modalContainer.classList.remove('hidden')
+
     getRandomLocation() 
     renderCompass(playerCoords)
 } 
+
+modalContainer.querySelector('button').addEventListener('touchstart',() => {
+    modalContainer.classList.add("hidden")
+})
 
 findPlayerLocation();
