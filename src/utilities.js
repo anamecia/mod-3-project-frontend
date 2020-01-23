@@ -1,7 +1,8 @@
-function trackDistance(){
-
+function trackDistance(locationCoordinates){
+    
     let distanceMonitor = setInterval(
-    () => findDistanceBetweenPlayerAndLocation(playerCoords, wasabi), 1000);
+    () => findDistanceBetweenPlayerAndLocation(playerCoords, locationCoordinates), 1000);
+
 
     trackTime(distanceMonitor)
 
@@ -10,6 +11,7 @@ function trackDistance(){
         if (!playerPosition || !locationCoordinates) {
             return 0.00;
         } else if (playerPosition.latitude == locationCoordinates.latitude && playerPosition.longitude == locationCoordinates.longitude) {
+            playersGameLocations.push(locationCoordinates);
             showDistanceBetweenPlayerAndLocation(0.00);
             return 0.00; 
         } else {
@@ -42,13 +44,24 @@ function trackDistance(){
     function showDistanceBetweenPlayerAndLocation(distance){
         if (distance == 0.00 && distance <= 0.01){
             alert("You have reached your destination")
-            stopDistanceTracker()
-            //stop timer tracker
-        } else if (distance > 0.01 && distance <= 0.02) {
+            stopDistanceTracker();
+            playerTimes.push(`${minutesSpan.innerText}:${secondsSpan.innerText}`);
+            scoreSystem();
+            minutesSpan.innerText = ""
+            secondsSpan.innerText = ""
+            colonSpan.innerText = ""
+            clearInterval(window.timerMonitor)
+            if (playerTimes.length === 5){
+                renderEndOfGameInfo()
+            }else{
+                renderLocationFound()
+            }
+        } else if (distance > 0.01 && distance <= 0.09) {
             mapStyleID = "lopeariyo/ck5ojqkga1msi1io355h7k2so"
-        }   else if (distance > 0.02 && distance <= 0.03) {
+        }   else if (distance > 0.09 && distance <= 1.00) {
             mapStyleID = "lopeariyo/ck5ojug7b0nrq1in6l36o7xs8"
-        } else if (distance > 0.03) {
+        } else if (distance > 1.00) {
+
             mapStyleID = "lopeariyo/ck5ojucbs1n2u1invuue79hsl"
         }
     }
@@ -61,7 +74,7 @@ function trackDistance(){
 
 function trackTime(distanceMonitor){
     let totalSeconds = 0
-    let timerMonitor = setInterval(setTime, 1000);
+    window.timerMonitor = setInterval(setTime, 1000);
 
     function setTime(){
         ++totalSeconds
@@ -78,25 +91,58 @@ function trackTime(distanceMonitor){
             return valString;
         }
     }
-    stopTimeTracker(timerMonitor, distanceMonitor)
+    stopTimeTracker(window.timerMonitor, distanceMonitor)
 
 }
 
 function stopTimeTracker(timerMonitor, distanceMonitor){
     
     let hybridMonitor = setInterval(()=>{
-        if(parseInt(secondsSpan.innerText) >= 55){
+        if(parseInt(secondsSpan.innerText) >= 5){
             clearInterval(timerMonitor)
-            if(playersGameLocations.length < 5){
+
+            if(playerTimes.length < 4){
+                playerTimes.push("00:00")
                 clearInterval(hybridMonitor)
                 clearInterval(distanceMonitor)
-                timerContainer.innerText = ""
+                minutesSpan.innerText = ""
+                secondsSpan.innerText = ""
+                colonSpan.innerText = ""
                 renderOutOfTimeStatus()
             }else{
+                playerTimes.push("00:00")
                 clearInterval(hybridMonitor)
-                timerContainer.innerText = ""
-                endGame()
+                clearInterval(distanceMonitor)
+                minutesSpan.innerText = ""
+                secondsSpan.innerText = ""
+                colonSpan.innerText = ""
+                renderEndOfGameInfo()
             }
         }
     },1500)   
 }
+
+function getRandomLocation(){
+    const locationsUrl = "http://localhost:3000/locations/"
+
+    get(locationsUrl)
+    .then(locations => Math.floor(Math.random()*(1-locations.length)+locations.length))
+    .then((index) => get(`${locationsUrl}${index}`))
+    // .then (location => trackDistance({latitude: location.latitude, longitude: location.longitude})) 
+    trackDistance(playerCoords)
+}
+
+function scoreSystem(){
+    if( parseInt(minutesSpan.innerText) < 1){
+        playerScore += 10;
+    }else if(( parseInt(minutesSpan.innerText) < 2)){
+        playerScore += 8;
+    }else if(( parseInt(minutesSpan.innerText) < 3)){
+        playerScore += 6;
+    }else if(( parseInt(minutesSpan.innerText) < 4)){
+        playerScore += 4;
+    }else{
+        playerScore += 2;
+    }
+}
+
