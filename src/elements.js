@@ -34,7 +34,7 @@ function renderOutOfTimeStatus(){
     const missedLocationInfo = document.createElement("p")
     missedLocationInfo.innerText = "You didn't get there in time :(!"
     const newLocationButton = document.createElement("button")
-    newLocationButton.innerText = "Generate New Location"
+    newLocationButton.innerText = "Next Location"
     newLocationButton.addEventListener("touchstart", startGame)
     infoContainer.append(missedLocationInfo, newLocationButton)
 }

@@ -142,9 +142,7 @@ function getRandomLocation(){
     get(locationsUrl)
     .then(locations => Math.floor(Math.random()*(1-locations.length)+locations.length))
     .then((index) => get(`${locationsUrl}${index}`))
-    // .then (location => trackDistance({latitude: location.latitude, longitude: location.longitude})) 
-    // trackDistance({latitude: 51.520850, longitude: -0.089869}) //Santander Bikes
-    trackDistance(wasabi)
+    .then (location => trackDistance({latitude: location.latitude, longitude: location.longitude})) 
     // trackDistance(playerCoords)
 }
 
