@@ -10,11 +10,15 @@ const infoContainer = document.querySelector('#info')
 const loadingContainer = document.querySelector('#loading')
 const compassContainer = document.querySelector('.map-overlay-1')
 const modalContainer = document.querySelector('.modal')
-
+const distanceClueDisplay = document.querySelector('#distance-clue')
+const clue = document.querySelector('#clue')
 //Global Variables 
 
 let playerCoords = null;
 let compassMapStyleID = null;
+let distanceClue = ""
+const locationsUrl = "http://localhost:3000/locations/"
+
 
 
 const wasabi = {
@@ -83,10 +87,8 @@ function startGame(){
     startButtonContainer.remove()
     infoContainer.innerText = ""
     // alert("Answer the clues, to reveal the locations"); // change to popup
-    modalContainer.querySelector('p').innerText = "Answer the clues, to reveal the locations"
     modalContainer.classList.remove('hidden')
-
-    getRandomLocation() 
+    getRandomIndex() 
     renderCompass(playerCoords)
 } 
 
