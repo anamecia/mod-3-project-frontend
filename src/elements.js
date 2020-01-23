@@ -146,7 +146,7 @@ function renderCompass(position, mapStyleID ){
         container: 'compass-map', // container id
         style: "mapbox://styles/lopeariyo/ck5jfumur1xbt1imwh82f1ugp", //hosted style id
         center: [position.longitude, position.latitude], // starting position [longitude, latitude], needs to be generated and shown on map 
-        zoom: 18 // starting zoom
+        zoom: 15 // starting zoom
     });
 
     // function switchLayer(layerID) {
