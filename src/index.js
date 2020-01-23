@@ -7,6 +7,8 @@ const minutesSpan = document.querySelector('#minutes')
 const secondsSpan = document.querySelector('#seconds')
 const colonSpan = document.querySelector('#colon')
 const infoContainer = document.querySelector('#info')
+const loadingContainer = document.querySelector('#loading')
+const compassContainer = document.querySelector('.map-overlay-1')
 
 //Global Variables 
 
@@ -44,10 +46,13 @@ function findPlayerLocation(){
         alert("Geolocation is not supported by your browser!"); //change to popup/modal
         return;
     }
+    // console.log("Locating..."); //change to a loading screen
 
-    console.log("Locating..."); //change to a loading screen
 
     function success(position) {
+
+        loadingContainer.classList.add("hidden")
+        compassContainer.classList.remove("hidden")
 
         let myLatitude = position.coords.latitude;
         let myLongitude = position.coords.longitude;
@@ -62,6 +67,8 @@ function findPlayerLocation(){
     }
 
     function error() {
+
+        loadingContainer.classList.add("hidden")
         alert("Unable to retrieve your location");
     }
 
