@@ -1,7 +1,7 @@
 function trackDistance(locationCoordinates){
     
     let distanceMonitor = setInterval(
-    () => findDistanceBetweenPlayerAndLocation(playerCoords, locationCoordinates), 1000);
+    () => findDistanceBetweenPlayerAndLocation(playerCoords, locationCoordinates), 3000);
 
 
     trackTime(distanceMonitor)
@@ -42,28 +42,42 @@ function trackDistance(locationCoordinates){
     }
 
     function showDistanceBetweenPlayerAndLocation(distance){
-        if (distance == 0.00 && distance <= 0.01){
-            alert("You have reached your destination")
-            stopDistanceTracker();
-            playerTimes.push(`${minutesSpan.innerText}:${secondsSpan.innerText}`);
-            scoreSystem();
-            minutesSpan.innerText = ""
-            secondsSpan.innerText = ""
-            colonSpan.innerText = ""
-            clearInterval(window.timerMonitor)
-            if (playerTimes.length === 5){
-                renderEndOfGameInfo()
-            }else{
-                renderLocationFound()
-            }
-        } else if (distance > 0.01 && distance <= 0.09) {
-            mapStyleID = "lopeariyo/ck5ojqkga1msi1io355h7k2so"
-        }   else if (distance > 0.09 && distance <= 1.00) {
-            mapStyleID = "lopeariyo/ck5ojug7b0nrq1in6l36o7xs8"
-        } else if (distance > 1.00) {
-
-            mapStyleID = "lopeariyo/ck5ojucbs1n2u1invuue79hsl"
-        }
+        
+    
+            if (distance == 0.00 && distance <= 0.02){
+                alert("You found it!!!!!")
+                compassMapStyleID = "lopeariyo/ck5qjrkxu1wvr1ip8eg2jetse" //green map
+                stopDistanceTracker();
+                playerTimes.push(`${minutesSpan.innerText}:${secondsSpan.innerText}`);
+                scoreSystem();
+                minutesSpan.innerText = ""
+                secondsSpan.innerText = ""
+                colonSpan.innerText = ""
+                clearInterval(window.timerMonitor)
+                if (playerTimes.length === 5){
+                    renderEndOfGameInfo()
+                }else{
+                    renderLocationFound()
+                }
+            } else if (distance > 0.02 && distance <= 0.06) {
+                alert("Hot Hot!")  
+                compassMapStyleID = "lopeariyo/ck5ojqkga1msi1io355h7k2so" //red 1
+            }   else if (distance > 0.06 && distance <= 0.12) {
+                compassMapStyleID = "lopeariyo/ck5qpp5dt0su31imsgbp2cocq" //red 2
+                alert("On it like a scotch bonnet!")    
+            } else if (distance > 0.12 && distance <= 0.20) {
+                compassMapStyleID = "lopeariyo/ck5qpowi4225v1ilcssdzehns" //purple 1
+                alert("Getting hotter, looks like you don't need a blanket anymore!")
+            } else if (distance > 0.20 && distance <= 0.36) {
+                compassMapStyleID = "lopeariyo/ck5ojug7b0nrq1in6l36o7xs8" // purple 2
+                alert("Getting warmer, you still need a blanket though!") 
+            } else if (distance > 0.36 && distance <= 0.68) {
+                compassMapStyleID = "lopeariyo/ck5ojucbs1n2u1invuue79hsl"// blue 1
+                alert("Brrrr... cold!")  
+            } else if (distance > 0.68 ) {
+                compassMapStyleID = "lopeariyo/k5qpp1bs0su21imsxp6dq29l" // blue 2
+                alert("Freezing... Game over!") // 
+            } 
     }
 
     function stopDistanceTracker(){
@@ -98,7 +112,7 @@ function trackTime(distanceMonitor){
 function stopTimeTracker(timerMonitor, distanceMonitor){
     
     let hybridMonitor = setInterval(()=>{
-        if(parseInt(secondsSpan.innerText) >= 5){
+        if(parseInt(minutesSpan.innerText) >= 5){
             clearInterval(timerMonitor)
 
             if(playerTimes.length < 4){
@@ -123,7 +137,7 @@ function stopTimeTracker(timerMonitor, distanceMonitor){
 }
 
 function getRandomLocation(){
-    const locationsUrl = "http://localhost:3000/locations/"
+    const locationsUrl = "https://fddd23ce.ngrok.io/locations/"
 
     get(locationsUrl)
     .then(locations => Math.floor(Math.random()*(1-locations.length)+locations.length))

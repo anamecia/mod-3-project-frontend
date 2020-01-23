@@ -14,7 +14,8 @@ const modalContainer = document.querySelector('.modal')
 //Global Variables 
 
 let playerCoords = null;
-let mapStyleID = null;
+let compassMapStyleID = null;
+
 
 const wasabi = {
     latitude: 51.520269,
@@ -63,7 +64,8 @@ function findPlayerLocation(){
             longitude: myLongitude
         };
         
-        renderMap(playerCoords, mapStyleID)
+        renderMap(playerCoords)
+        renderCompass(playerCoords, compassMapStyleID)
         console.log("Located"); 
     }
 
