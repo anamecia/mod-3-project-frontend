@@ -102,7 +102,7 @@ function stopTimeTracker(timerMonitor, distanceMonitor){
             clearInterval(timerMonitor)
 
             if(playerTimes.length < 4){
-                playerTimes.push("00:00")
+                playerTimes.push(`${minutesSpan.innerText}:${secondsSpan.innerText}`)
                 clearInterval(hybridMonitor)
                 clearInterval(distanceMonitor)
                 minutesSpan.innerText = ""
@@ -110,7 +110,7 @@ function stopTimeTracker(timerMonitor, distanceMonitor){
                 colonSpan.innerText = ""
                 renderOutOfTimeStatus()
             }else{
-                playerTimes.push("00:00")
+                playerTimes.push(`${minutesSpan.innerText}:${secondsSpan.innerText}`)
                 clearInterval(hybridMonitor)
                 clearInterval(distanceMonitor)
                 minutesSpan.innerText = ""
@@ -133,13 +133,13 @@ function getRandomLocation(){
 }
 
 function scoreSystem(){
-    if( parseInt(minutesSpan.innerText) < 1){
+    if( parseInt(minutesSpan.innerText) < 1 || minutesSpan.innerText === ""){
         playerScore += 10;
     }else if(( parseInt(minutesSpan.innerText) < 2)){
         playerScore += 8;
     }else if(( parseInt(minutesSpan.innerText) < 3)){
         playerScore += 6;
-    }else if(( parseInt(minutesSpan.innerText) < 4)){
+    }else if(( parseInt(minutesSpan.innerText) < 4) ){
         playerScore += 4;
     }else{
         playerScore += 2;
