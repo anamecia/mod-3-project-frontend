@@ -146,7 +146,7 @@ function renderCompass(position, mapStyleID ){
         container: 'compass-map', // container id
         style: "mapbox://styles/lopeariyo/ck5jfumur1xbt1imwh82f1ugp", //hosted style id
         center: [position.longitude, position.latitude], // starting position [longitude, latitude], needs to be generated and shown on map 
-        zoom: 18 // starting zoom
+        zoom: 15 // starting zoom
     });
 
     // function switchLayer(layerID) {
@@ -283,7 +283,7 @@ function renderOutOfTimeStatus(){
     const missedLocationInfo = document.createElement("p")
     missedLocationInfo.innerText = "You didn't get there in time :(!"
     const newLocationButton = document.createElement("button")
-    newLocationButton.innerText = "Generate New Location"
+    newLocationButton.innerText = "Next Location"
     newLocationButton.addEventListener("touchstart", startGame)
     infoContainer.append(missedLocationInfo, newLocationButton)
 }

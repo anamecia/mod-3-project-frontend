@@ -11,22 +11,28 @@
 
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
     
     <link href="index.css" rel="stylesheet" />
 </head>
 <body>
 <div class="main-container">
     <div id="map" class="main-container map-base-layer"></div>
-    <div class="map-overlay-1">
+    <div class="map-overlay-1 hidden">
         <div id="compass-map" class="compass-container"></div>
         <div id="compass" class="compass-container"></div>
     </div>
     <div class="map-overlay-2">
         <div id ="info"></div>
+        <div id="loading" class="loader"></div>
         <div id="timer" >
             <span id="minutes"></span><span id="colon"></span><span id="seconds"></span>
         </div>
-        <div id ="start-btn" class="elements-container">  
+        <div class="modal hidden">
+            <button id="close-modal">x</button>
+            <p></p>
+        </div>
+        <div id ="start-btn" class="elements-container"></div>
     </div>
 </div>
 
