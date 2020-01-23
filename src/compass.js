@@ -118,6 +118,13 @@ function renderCompass(position){
         //     document.getElementById("compass").style.transform = `rotate(${heading}deg)`
         //     compass.setBearing(heading)
         // })
+
+        window.addEventListener("deviceorientation", function(event) {
+            
+            let alpha = event.alpha
+            document.querySelector("#compass").style.transform = `rotate(${alpha}deg)` //compass container image
+            compass.setBearing(alpha) //compass map
+        })
     })
 
 }

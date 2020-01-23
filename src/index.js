@@ -1,5 +1,4 @@
 
-
 // Elements Finder
 const startButtonContainer = document.querySelector('#start-btn');
 const timerContainer = document.querySelector('#timer')
@@ -16,29 +15,9 @@ const clue = document.querySelector('#clue')
 
 let playerCoords = null;
 let compassMapStyleID = null;
+
 let distanceClue = ""
 const locationsUrl = "http://localhost:3000/locations/"
-
-
-
-const wasabi = {
-    latitude: 51.520269,
-    longitude: -0.087066
-}
-const boots = {
-    latitude: 51.518764,
-    longitude: -0.088231
-}
-const mands = {
-    latitude: 51.59599,
-    longitude: -0.087077
-}
-
-const croydon = {
-    latitude: 51.378643,
-    longitude: -0.102535
-}
-
 
 const playersGameLocations = []
 const playerTimes = []
