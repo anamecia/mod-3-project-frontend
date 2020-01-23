@@ -101,9 +101,11 @@ body {
 }
 
 #info p{
-    font-size: 40px;
+    font-size: 2rem;
+    font-family: Helvetica;
     color: #ffa500;
     text-align: center;
+    line-height: 2.5rem;
 }
 
 button {
