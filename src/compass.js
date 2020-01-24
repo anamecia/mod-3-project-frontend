@@ -9,6 +9,7 @@ function renderCompass(position){
         zoom: 15 // starting zoom
     });
 
+
     function switchCompassStyle(layerID) {
         compass.setStyle(`mapbox://styles/${layerID}`);
     }
