@@ -124,7 +124,7 @@ function trackTime(distanceMonitor){
 function stopTimeTracker(timerMonitor, distanceMonitor){
     
     let hybridMonitor = setInterval(()=>{
-        if(parseInt(secondsSpan.innerText) >= 5){
+        if(parseInt(minutesSpan.innerText) >= 5){
             clearInterval(timerMonitor)
 
             if(playerTimes.length < 4){
