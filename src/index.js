@@ -17,7 +17,8 @@ let playerCoords = null;
 let compassMapStyleID = null;
 
 let distanceClue = ""
-const locationsUrl = "http://localhost:3000/locations/"
+// const locationsUrl = "http://localhost:3000/locations/"
+const locationsUrl = "https://6017359c.ngrok.io/locations/"
 
 const playersGameLocations = []
 const playerTimes = []
